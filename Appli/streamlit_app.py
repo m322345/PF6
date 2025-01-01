@@ -2,20 +2,34 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 3,
    "id": "bef8236b-11e3-45b6-8214-59ca7a46a361",
    "metadata": {},
    "outputs": [
     {
-     "name": "stdout",
+     "name": "stderr",
      "output_type": "stream",
      "text": [
-      "Hello !\n"
+      "2025-01-01 15:00:16.564 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
+      "2025-01-01 15:00:16.889 \n",
+      "  \u001b[33m\u001b[1mWarning:\u001b[0m to view this Streamlit app on a browser, run it with the following\n",
+      "  command:\n",
+      "\n",
+      "    streamlit run C:\\Users\\cedric\\anaconda3\\envs\\python3-9\\lib\\site-packages\\ipykernel_launcher.py [ARGUMENTS]\n",
+      "2025-01-01 15:00:16.889 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
+      "2025-01-01 15:00:16.890 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
+      "2025-01-01 15:00:16.891 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
+      "2025-01-01 15:00:16.891 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
+      "2025-01-01 15:00:16.892 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n"
      ]
     }
    ],
    "source": [
-    "print('Hello !')"
+    "import streamlit as st\n",
+    "import pandas as pd\n",
+    "\n",
+    "st.title(\"Risque Faillite Credit\")\n",
+    "st.write(\"Je suis a court d'inspiration\")"
    ]
   },
   {
