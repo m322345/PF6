@@ -25,10 +25,12 @@ def main():
     st.title('Risque de Faillite d\'un Crédit')
 
     if predict_btn:
-        pred = request_prediction(MODEL_URI, str(user_id))
-        st.write(pred)
-#        st.write(
-#            'le risque est de {:.2f}'.format(pred))
+        with st.spinner("waiting"):
+            pred = request_prediction(MODEL_URI, str(user_id))
+            if type(pred) == dict:
+                st.write(f"Prédiction pour le client {pred['client_id']}")
+                st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
+                st.write(f"La demande de crédit est {pred['status']}")
 
 if __name__ == '__main__':
     main()

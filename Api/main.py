@@ -12,5 +12,5 @@ async def root():
 @app.get("/request/{client_id}")
 def return_pred(client_id: int):
     risk = 0.64
-    status = "Yes"
-    return {"client_id": client_id, "risk": risk, "state": status}
+    status = "Accordée"
+    return {"client_id": client_id, "risk": risk, "status": status}
