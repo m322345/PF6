@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
+from pathlib import Path
 
 def request_prediction(model_uri, data):
     headers = {"Content-Type": "application/json"}
@@ -12,16 +13,18 @@ def request_prediction(model_uri, data):
     return response.json()
 
 def main():
+    #Url Api
     MODEL_URI = 'http://127.0.0.1:5000/invocations'
-
-    user_id = st.sidebar.selectbox(
-        'Recherche client',
-        ['2332344', '234324325', '24344535'])
-    st.title('Risque Faillite Credit')
+    #fichier données
+    pathData = str(Path(__file__).parent)+'/Data/'
+    ClientsDatabase = pd.read_csv(pathData+'ClientsDatabase.csv')
+    ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
+    #Menu deroulant
+    user_id = st.sidebar.selectbox('Recherche client',ClientsList)
+    predict_btn = st.sidebar.button('Calcul du risque')
+    st.title('Risque de Faillite d\'un Crédit')
 #    longitude = st.number_input('Longitude du secteur',
 #                                value=-119., step=1.)
-
-    predict_btn = st.button('Calcul du risque')
     if predict_btn:
         data = [[user_id]]
         pred = request_prediction(MODEL_URI, data)[0]
