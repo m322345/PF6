@@ -9,8 +9,8 @@ app = FastAPI()
 async def root():
     return " Bienvenue sur notre API "
 
-@app.get("/request/{client}")
-def read_item(item_id: int):
+@app.get("/request/{client_id}")
+def return_pred(client_id: int):
     risk = 0.64
     status = "Yes"
-    return {"client": client, "risk": risk, "state": status}
+    return {"client": client_id, "risk": risk, "state": status}
