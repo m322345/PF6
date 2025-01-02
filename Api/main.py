@@ -1,5 +1,6 @@
 from typing import Optional
 from fastapi import FastAPI
+import pandas as pd
 import pickle
 
 app = FastAPI()

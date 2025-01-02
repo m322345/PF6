@@ -28,7 +28,7 @@ def main():
         with st.spinner("Merci de patienter l\'api est en cours de démarrage... "):
             pred = request_prediction(MODEL_URI, str(user_id))
             if type(pred) == dict:
-                if pred.has_key("error"):
+                if "error" in pred:
                     st.write(f"")
                     st.write(f"Erreur {pred['error']}")
                 else:
