@@ -14,7 +14,10 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.impute import SimpleImputer
 from imblearn.over_sampling import SMOTE
 
+
 randomState = 42
+FichierClient = 'Data/Db/ClientsDatabase.csv'
+
 
 def repartitionCibles(dataset):
     """
@@ -75,7 +78,6 @@ y_pred_proba = np.array(y_pred_proba > 0)*1
 module.matrice_confusion(train_labels, y_pred_proba, "Regression Logistique")    """
 
 
-
 def encoderVariables(train, test):
     le = LabelEncoder()
     le_count = 0
@@ -103,7 +105,6 @@ def encoderVariables(train, test):
     return train, test
 
 
-
 def netoyAugmtDonnées(dataset):
     """
     Nettoie les données du dataset et 
@@ -128,6 +129,9 @@ def netoyAugmtDonnées(dataset):
     return dataset
 
 
+def saveFichierClient(dataset):
+    dataset.sample(50).sort_values(by='SK_ID_CURR', ascending=True).to_csv(FichierClient)
+
 
 def equilibrageDonnées(dataset, labels):
     smt = SMOTE(random_state=randomState)
@@ -135,13 +139,12 @@ def equilibrageDonnées(dataset, labels):
     return dataset_res, labels_res
 
 
-
 def traitementDonnées(dataset_train, dataset_test, smote=True):
     """
     Traite les données du dataset
     _______________entrées_______________
     dataset : array
-    train : (0/1) traitement specifique train
+    smote : (0/1) traitement specifique equilibrage
     _______________sorties_______________
     X_train: jeu d'entrainement
     X_test: jeu de test
@@ -156,6 +159,7 @@ def traitementDonnées(dataset_train, dataset_test, smote=True):
     print('Testing data shape: ', dataset_test.shape)
     dataset_train = netoyAugmtDonnées(dataset_train)
     dataset_test = netoyAugmtDonnées(dataset_test)
+    saveFichierClient(dataset_test)
     dataset_train, dataset_test = encoderVariables(dataset_train, dataset_test)
     # Drop the target from the training data
     labels = dataset_train['TARGET']
