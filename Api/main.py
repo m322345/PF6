@@ -13,4 +13,4 @@ async def root():
 def return_pred(client_id: int):
     risk = 0.64
     status = "Yes"
-    return {"client": client_id, "risk": risk, "state": status}
+    return {"client_id": client_id, "risk": risk, "state": status}
