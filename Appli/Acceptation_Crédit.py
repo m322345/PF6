@@ -17,7 +17,7 @@ def main():
     MODEL_URI = 'https://ocp7-api.onrender.com/'
     #fichier données
     pathData = str(Path(__file__).parent)+'/../Api/Data/Db/'
-    ClientsDatabase = pd.read_csv(pathData+'ClientsDatabase.csv')
+    ClientsDatabase = pd.read_csv(pathData+'ClientDatabase.csv')
     ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
     #Menu deroulant
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)

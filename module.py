@@ -16,7 +16,7 @@ from imblearn.over_sampling import SMOTE
 
 
 randomState = 42
-FichierClientApi= 'Api/Data/Db/ClientsDatabase.csv'
+FichierClientApi= 'Api/Data/Db/ClientDatabase.csv'
 
 
 def repartitionCibles(dataset):
