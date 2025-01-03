@@ -104,31 +104,6 @@ def encoderVariables(train, test):
     train['TARGET'] = train_labels
     return train, test
 
-
-def netoyAugmtDonnées(dataset):
-    """
-    Nettoie les données du dataset et 
-    ajoute de nouvelles features
-    _______________entrées_______________
-    dataset : array
-    _______________sorties_______________
-    retourne le dataset nettoyé avec nouvelles features
-    """
-    # traite les valeurs aberrantes
-    dataset['DAYS_EMPLOYED_ANOM'] = dataset["DAYS_EMPLOYED"] == 365243
-    dataset['DAYS_EMPLOYED'].replace({365243: np.nan}, inplace = True)
-
-    # création de features
-    dataset['CREDIT_INCOME_PERCENT'] = dataset['AMT_CREDIT'] / dataset['AMT_INCOME_TOTAL']
-    dataset['ANNUITY_INCOME_PERCENT'] = dataset['AMT_ANNUITY'] / dataset['AMT_INCOME_TOTAL']
-    dataset['CREDIT_TERM'] = dataset['AMT_ANNUITY'] / dataset['AMT_CREDIT']
-    dataset['DAYS_EMPLOYED_PERCENT'] = dataset['DAYS_EMPLOYED'] / dataset['DAYS_BIRTH']
-    dataset['CREDIT_INCOME_BY_AGE'] = dataset['CREDIT_INCOME_PERCENT'] / dataset['DAYS_BIRTH']
-    dataset['ANNUITY_INCOME_BY_AGE'] = dataset['ANNUITY_INCOME_PERCENT'] / dataset['DAYS_BIRTH']
-    dataset['INCOME_TO_FAMILYSIZE'] = dataset['AMT_INCOME_TOTAL'] / dataset['CNT_FAM_MEMBERS']
-    return dataset
-
-
 def saveFichierClient(dataset):
     sample=dataset.sample(50).sort_values(by='SK_ID_CURR', ascending=True)
     sample.to_csv(FichierClientApi)
