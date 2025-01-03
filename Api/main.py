@@ -5,8 +5,8 @@ import pickle
 
 app = FastAPI()
 
-model = pickle.load( open( "../Data/Model/model.pkl", "rb" ) )
-ClientsDatabase = pd.read_csv('../Data/Db/ClientDatabase.csv')
+model = pickle.load( open( "Data/Model/model.pkl", "rb" ) )
+ClientsDatabase = pd.read_csv("Data/Db/ClientDatabase.csv")
 #fichierClientPp = pd.read_csv('../Data/Db/ClientDatabasePp.csv')
 
 @app.get("/")

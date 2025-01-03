@@ -16,7 +16,7 @@ from imblearn.over_sampling import SMOTE
 
 
 randomState = 42
-FichierClient = 'Data/Db/ClientsDatabase.csv'
+FichierClientApi= 'Api/Data/Db/ClientsDatabase.csv'
 
 
 def repartitionCibles(dataset):
@@ -130,8 +130,9 @@ def netoyAugmtDonnées(dataset):
 
 
 def saveFichierClient(dataset):
-    dataset.sample(50).sort_values(by='SK_ID_CURR', ascending=True).to_csv(FichierClient)
-
+    sample=dataset.sample(50).sort_values(by='SK_ID_CURR', ascending=True)
+    sample.to_csv(FichierClientApi)
+    return sample
 
 def equilibrageDonnées(dataset, labels):
     smt = SMOTE(random_state=randomState)
@@ -159,7 +160,7 @@ def traitementDonnées(dataset_train, dataset_test, smote=True):
     print('Testing data shape: ', dataset_test.shape)
     dataset_train = netoyAugmtDonnées(dataset_train)
     dataset_test = netoyAugmtDonnées(dataset_test)
-    saveFichierClient(dataset_test)
+    dataset_api = saveFichierClient(dataset_test)
     dataset_train, dataset_test = encoderVariables(dataset_train, dataset_test)
     # Drop the target from the training data
     labels = dataset_train['TARGET']
