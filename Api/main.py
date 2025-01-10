@@ -25,8 +25,8 @@ def return_pred(client_id: int):
         X = X.drop(['SK_ID_CURR'], axis=1)
         risk = model.predict_proba(X)[:, 1]
         #risk = 0.64
-        if risk > seuil:
-            status = "Refusé"
-        else:
-            status = "Accordée"
+        #if risk > seuil:
+        #    status = "Refusé"
+        #else:
+        status = "Accordée"
         return {"client_id": client_id, "risk": risk, "status": status}
