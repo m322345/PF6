@@ -22,11 +22,11 @@ def return_pred(client_id: int):
         return {"error": "Client inconnu de notre base"}
     else:
         X = ClientsDatabase[ClientsDatabase['SK_ID_CURR'] == client_id]
-        X = X.drop(['SK_ID_CURR'], axis=1)
-        risk = model.predict_proba(X)[:, 1]
-        #risk = 0.64
-        #if risk > seuil:
-        #    status = "Refusé"
-        #else:
-        status = "Accordée"
+        X = X.drop(['SK_ID_CURR','TARGET'], axis=1)
+        risk = model.predict_proba(X)[:, 1][0]
+        #tauxRisk = risk
+        if risk > seuil:
+            status = "Refusé"
+        else:
+            status = "Accordée"
         return {"client_id": client_id, "risk": risk, "status": status}
