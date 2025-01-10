@@ -1,5 +1,7 @@
 from typing import Optional
 from fastapi import FastAPI
+import lightgbm as lgb
+from lightgbm import LGBMClassifier
 import pandas as pd
 import pickle
 
