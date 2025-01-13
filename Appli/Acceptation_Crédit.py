@@ -54,7 +54,7 @@ def Client(id,dataset):
 
 
 def set_state(i):
-    st.session_state.stage = i
+    st.session_state.etat = i
 
 
 def main():
@@ -75,7 +75,7 @@ def main():
     
     st.title('Calcul Risque d\'un Crédit')
 
-    if st.session_state.stage != 0:
+    if st.session_state.etat != 0:
         with st.spinner("Merci de patienter l\'api est en cours de démarrage... "):
             pred = request_prediction(MODEL_URI, str(user_id))
             if type(pred) == dict:
