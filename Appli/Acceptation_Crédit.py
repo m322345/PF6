@@ -29,8 +29,8 @@ def visualize_importance(modele, id, donnees):
     prediction = lambda x: modele.predict_proba(x)[:, 1]
     moyennes = X.mean().values.reshape((1, X.shape[1]))
     explainer = shap.Explainer(prediction, moyennes)
-    shap_values_single = explainer(Client(id,donnees), max_evals=1131)
-    shap_values = explainer(X, max_evals=1417)
+    shap_values_single = explainer(Client(id,donnees), max_evals=1500)
+    shap_values = explainer(X, max_evals=1500)
     return shap_values_single, shap_values
 
 
