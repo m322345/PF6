@@ -69,7 +69,7 @@ def main():
         st.session_state.etat = 0
     #Menu deroulant
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)
-    predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id])
+    predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id], use_column_width=True)
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
     
@@ -87,7 +87,7 @@ def main():
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
                     st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
-                    voirFeatureImpoLocale = st.button('Voir les raisons')
+                    voirFeatureImpoLocale = st.button('Voir les raisons', use_column_width=True)
 
                     if voirFeatureImpoLocale:
                         model = loadModel(pathDb+'model.pkl')
