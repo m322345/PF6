@@ -8,7 +8,7 @@ import pickle
 def get_file_number(filename):
     f = open(filename)
     content = f.read()
-    value = int(content)
+    value = float(content)
     f.close()
     return value
 
