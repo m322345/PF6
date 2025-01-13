@@ -1,9 +1,11 @@
 import streamlit as st
 import pandas as pd
 import requests
-import lightgbm as lgb
-from lightgbm import LGBMClassifier
+import shap
+#import lightgbm as lgb
+#from lightgbm import LGBMClassifier
 from pathlib import Path
+
 
 def request_prediction(model_uri, data):
     headers = {"Content-Type": "application/json"}
@@ -13,6 +15,7 @@ def request_prediction(model_uri, data):
         raise Exception(
             "Request failed with status {}, {}".format(response.status_code, response.text))
     return response.json()
+
 
 def main():
     #Url Api
@@ -25,6 +28,9 @@ def main():
     #Menu deroulant
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)
     predict_btn = st.sidebar.button('Calcul du risque')
+    st.sidebar.divider()
+    st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
+    
     st.title('Calcul Risque d\'un Crédit')
 
     if predict_btn:
@@ -39,6 +45,10 @@ def main():
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
                     st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
+                    voirFeatureImpoLocale = st.button('Voir les riasons')
+
+    if voirFeatureImpoLocale:
+        shap.plots.waterfall(shap_values[0], max_display=14)
 
 if __name__ == '__main__':
     main()
