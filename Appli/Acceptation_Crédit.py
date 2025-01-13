@@ -69,7 +69,7 @@ def main():
         st.session_state.etat = 0
     #Menu deroulant
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)
-    predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id], use_column_width=True)
+    predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id])
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
     
