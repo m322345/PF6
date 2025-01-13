@@ -10,6 +10,7 @@ import pickle
 
 
 def get_file_number(filename):
+    """recuperation du seuil etabli lors de l'elaboration du modele"""
     f = open(filename)
     content = f.read()
     value = float(content)
@@ -18,6 +19,7 @@ def get_file_number(filename):
 
 
 def request_prediction(model_uri, data):
+    """interrogation de l'api"""
     headers = {"Content-Type": "application/json"}
     data_json = {'data': data}
     response = requests.request(method='GET', headers=headers, url=model_uri+'request/'+data)
@@ -25,11 +27,6 @@ def request_prediction(model_uri, data):
         raise Exception(
             "Request failed with status {}, {}".format(response.status_code, response.text))
     return response.json()
-
-
-def st_shap(plot, height=None):
-    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
-    components.html(shap_html, height=height)
 
 
 def visualize_importance(modele, id, donnees):
@@ -40,7 +37,6 @@ def visualize_importance(modele, id, donnees):
     explainer = shap.Explainer(prediction, moyennes)
     shap_values_single = explainer(Client(id,donnees), max_evals=1500)
     shap_values = explainer(X, max_evals=1500)
-    #st_shap(shap.force_plot(explainer, shap_values, X), 400)
     return shap_values_single, shap_values
 
 
@@ -64,11 +60,11 @@ def Client(id,dataset):
 
 
 def set_state(i):
+    """sauvegarde l'etat de la session"""
     st.session_state.etat = i
 
 
 def main():
-
     #Url Api
     MODEL_URI = 'https://ocp7-api.onrender.com/'
     #fichier données
@@ -78,13 +74,15 @@ def main():
     ClientsDatabase = pd.read_csv(pathDb+'ClientDatabase.csv')
     ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
     Seuil = get_file_number(FichierSeuil)
+    #creation de la session
     if 'etat' not in st.session_state:
         st.session_state.etat = 0
-    #Menu deroulant
+    #Menu
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)
     predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id])
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
+    #Page
     st.title('Calcul Risque d\'un Crédit')
 
     if st.session_state.etat != 0:
