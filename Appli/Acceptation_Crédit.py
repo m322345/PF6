@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import requests
 import shap
 import lightgbm
-#from lightgbm import LGBMClassifier
 from pathlib import Path
 import pickle
 
@@ -76,11 +75,10 @@ def main():
     predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id])
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
-    
     st.title('Calcul Risque d\'un Crédit')
 
     if st.session_state.etat != 0:
-        with st.spinner("Merci de patienter l\'api est en cours de démarrage... "):
+        with st.spinner("Merci de patienter, nous récuperons les données du client ... "):
             pred = request_prediction(MODEL_URI, str(user_id))
             if type(pred) == dict:
                 if "error" in pred:
@@ -91,23 +89,20 @@ def main():
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
                     st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
-                    voirFeatureImpoLocale = st.button('Voir les raisons')
+                    model = loadModel(pathMod+'model.pkl')
+                    shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
 
-                    if voirFeatureImpoLocale:
-                        model = loadModel(pathMod+'model.pkl')
-                        shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
-                        #st_shap(shap.force_plot(explainer.expected_value, shap_values, X), 400)
-                        st.divider()
-                        st.write(f"Explication Locale")
-                        fig, ax = plt.subplots(figsize=(5, 5))
-                        shap.plots.waterfall(shap_values_single[0], max_display=10)
-                        st.pyplot(fig)
-                        #st_shap(shap.plots.waterfall(shap_values_single[0], max_display=10))
-                        st.divider()
-                        st.write(f"Explication Globale")
-                        fig, ax = plt.subplots(figsize=(5, 5))
-                        shap.summary_plot(shap_values, max_display=10)
-                        st.pyplot(fig)
+                    st.divider()
+                    st.write(f"Explication Locale")
+                    fig, ax = plt.subplots(figsize=(5, 5))
+                    shap.plots.waterfall(shap_values_single[0], max_display=10)
+                    st.pyplot(fig)
+
+                    st.divider()
+                    st.write(f"Explication Globale")
+                    fig, ax = plt.subplots(figsize=(5, 5))
+                    shap.summary_plot(shap_values, max_display=10)
+                    st.pyplot(fig)
 
 if __name__ == '__main__':
     main()
