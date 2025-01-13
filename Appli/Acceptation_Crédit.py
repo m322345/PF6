@@ -87,7 +87,7 @@ def main():
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
                     st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
-                    voirFeatureImpoLocale = st.button('Voir les raisons', use_column_width=True)
+                    voirFeatureImpoLocale = st.button('Voir les raisons')
 
                     if voirFeatureImpoLocale:
                         model = loadModel(pathDb+'model.pkl')
