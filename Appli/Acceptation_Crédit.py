@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import requests
+import lightgbm as lgb
+from lightgbm import LGBMClassifier
 from pathlib import Path
 
 def request_prediction(model_uri, data):
@@ -16,8 +18,9 @@ def main():
     #Url Api
     MODEL_URI = 'https://ocp7-api.onrender.com/'
     #fichier données
-    pathData = str(Path(__file__).parent)+'/../Api/Data/Db/'
-    ClientsDatabase = pd.read_csv(pathData+'ClientDatabase.csv')
+    pathDb = str(Path(__file__).parent)+'/../Api/Data/Db/'
+    pathMod = str(Path(__file__).parent)+'/../Api/Data/Model/'
+    ClientsDatabase = pd.read_csv(pathDb+'ClientDatabase.csv')
     ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
     #Menu deroulant
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)
