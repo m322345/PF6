@@ -43,9 +43,9 @@ def DropColumns(dataset):
     return dataset
 
 
-def loadModel():
+def loadModel(modelPath):
     """retourne le modèle"""
-    return pickle.load( open( pathMod+"model.pkl", "rb" ) )
+    return pickle.load( open(modelPath, "rb" ) )
 
 
 def Client(id,dataset):
@@ -90,7 +90,7 @@ def main():
                     voirFeatureImpoLocale = st.button('Voir les raisons')
 
                     if voirFeatureImpoLocale:
-                        model = loadModel()
+                        model = loadModel(pathDb+'model.pkl')
                         shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
                         st_shap(shap.plots.waterfall(shap_values_single[0], max_display=10))
                         st_shap(shap.summary_plot(shap_values, max_display=10))
