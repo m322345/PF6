@@ -90,7 +90,7 @@ def main():
                     voirFeatureImpoLocale = st.button('Voir les raisons')
 
                     if voirFeatureImpoLocale:
-                        model = loadModel(pathDb+'model.pkl')
+                        model = loadModel(pathMod+'model.pkl')
                         shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
                         st_shap(shap.plots.waterfall(shap_values_single[0], max_display=10))
                         st_shap(shap.summary_plot(shap_values, max_display=10))
