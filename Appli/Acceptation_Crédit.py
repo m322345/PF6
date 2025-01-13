@@ -5,6 +5,7 @@ import shap
 #import lightgbm as lgb
 #from lightgbm import LGBMClassifier
 from pathlib import Path
+import pickle
 
 
 def request_prediction(model_uri, data):
@@ -15,6 +16,36 @@ def request_prediction(model_uri, data):
         raise Exception(
             "Request failed with status {}, {}".format(response.status_code, response.text))
     return response.json()
+
+
+def visualize_importance(modele, id, donnees):
+    """calcule la feature importance du modele"""
+    X = DropColumns(donnees)
+    prediction = lambda x: modele.predict_proba(x)[:, 1]
+    moyennes = X.mean().values.reshape((1, X.shape[1]))
+    explainer = shap.Explainer(prediction, moyennes)
+    shap_values_single = explainer(Client(id,donnees), max_evals=1131)
+    shap_values = explainer(X, max_evals=1417)
+    return shap_values_single, shap_values
+
+
+def DropColumns(dataset):
+    """enleve """
+    if 'SK_ID_CURR' in dataset.columns:
+        dataset = dataset.drop(['SK_ID_CURR'], axis=1)
+    if 'TARGET' in dataset.columns:
+        dataset = dataset.drop(['TARGET'], axis=1)
+    return dataset
+
+
+def loadModel():
+    """retourne le modèle"""
+    return pickle.load( open( pathMod+"model.pkl", "rb" ) )
+
+
+def Client(id,dataset):
+    """retourne les informations du client"""
+    return DropColumns(dataset.loc[dataset.SK_ID_CURR == id])
 
 
 def main():
@@ -45,10 +76,13 @@ def main():
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
                     st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
-                    voirFeatureImpoLocale = st.button('Voir les riasons')
+                    voirFeatureImpoLocale = st.button('Voir les raisons')
 
-    if voirFeatureImpoLocale:
-        shap.plots.waterfall(shap_values[0], max_display=14)
+                    if voirFeatureImpoLocale:
+                        model = loadModel()
+                        shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
+                        shap.plots.waterfall(shap_values_single[0], max_display=10)
+                        shap.summary_plot(shap_values, max_display=10)
 
 if __name__ == '__main__':
     main()
