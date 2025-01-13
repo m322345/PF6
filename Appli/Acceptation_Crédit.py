@@ -9,6 +9,14 @@ from pathlib import Path
 import pickle
 
 
+def get_file_number(filename):
+    f = open(filename)
+    content = f.read()
+    value = float(content)
+    f.close()
+    return value
+
+
 def request_prediction(model_uri, data):
     headers = {"Content-Type": "application/json"}
     data_json = {'data': data}
@@ -65,9 +73,11 @@ def main():
     MODEL_URI = 'https://ocp7-api.onrender.com/'
     #fichier données
     pathDb = str(Path(__file__).parent)+'/../Api/Data/Db/'
+    FichierSeuil = str(Path(__file__).parent)+'/../Api/Data/Seuil.txt'
     pathMod = str(Path(__file__).parent)+'/../Api/Data/Model/'
     ClientsDatabase = pd.read_csv(pathDb+'ClientDatabase.csv')
     ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
+    Seuil = get_file_number(FichierSeuil)
     if 'etat' not in st.session_state:
         st.session_state.etat = 0
     #Menu deroulant
@@ -87,7 +97,8 @@ def main():
                 else:
                     st.write(f"")
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
-                    st.write(f"le risque d'impayés est de {pred['risk']:.2f}")
+                    st.write(f"Le seuil d'acceptation est fixé à {Seuil:.2f}")
+                    st.write(f"Le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
                     model = loadModel(pathMod+'model.pkl')
                     shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
