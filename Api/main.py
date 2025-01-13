@@ -5,10 +5,19 @@ from lightgbm import LGBMClassifier
 import pandas as pd
 import pickle
 
+def get_file_number(filename):
+    f = open(filename)
+    content = f.read()
+    value = int(content)
+    f.close()
+    return value
+
+
 app = FastAPI()
-seuil = 0.54
+seuil = get_file_number("Data/Seuil.txt")
 model = pickle.load( open( "Data/Model/model.pkl", "rb" ) )
 ClientsDatabase = pd.read_csv("Data/Db/ClientDatabase.csv")
+
 
 @app.get("/")
 async def root():
