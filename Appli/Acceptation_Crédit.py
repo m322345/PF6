@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 import shap
-#import lightgbm as lgb
+import lightgbm
 #from lightgbm import LGBMClassifier
 from pathlib import Path
 import pickle
