@@ -32,7 +32,7 @@ def visualize_importance(modele, id, donnees):
     explainer = shap.Explainer(prediction, moyennes)
     shap_values_single = explainer(Client(id,donnees), max_evals=1500)
     shap_values = explainer(X, max_evals=1500)
-    st_shap(shap.force_plot(explainer.expected_value, shap_values, X), 400)
+    st_shap(shap.force_plot(explainer, shap_values, X), 400)
     return shap_values_single, shap_values
 
 
