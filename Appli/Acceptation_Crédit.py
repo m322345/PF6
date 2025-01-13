@@ -32,7 +32,7 @@ def visualize_importance(modele, id, donnees):
     explainer = shap.Explainer(prediction, moyennes)
     shap_values_single = explainer(Client(id,donnees), max_evals=1500)
     shap_values = explainer(X, max_evals=1500)
-    st_shap(shap.force_plot(explainer, shap_values, X), 400)
+    #st_shap(shap.force_plot(explainer, shap_values, X), 400)
     return shap_values_single, shap_values
 
 
@@ -95,6 +95,7 @@ def main():
                         model = loadModel(pathMod+'model.pkl')
                         shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
                         #st_shap(shap.force_plot(explainer.expected_value, shap_values, X), 400)
+                        st.pyplot(shap.plots.force(shap_values_single[0],matplotlib=True))
                         #st_shap(shap.plots.waterfall(shap_values_single[0], max_display=10))
                         #st_shap(shap.summary_plot(shap_values, max_display=10))
 
