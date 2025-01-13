@@ -18,6 +18,11 @@ def request_prediction(model_uri, data):
     return response.json()
 
 
+def st_shap(plot, height=None):
+    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+    components.html(shap_html, height=height)
+
+
 def visualize_importance(modele, id, donnees):
     """calcule la feature importance du modele"""
     X = DropColumns(donnees)
@@ -48,6 +53,10 @@ def Client(id,dataset):
     return DropColumns(dataset.loc[dataset.SK_ID_CURR == id])
 
 
+def set_state(i):
+    st.session_state.stage = i
+
+
 def main():
     #Url Api
     MODEL_URI = 'https://ocp7-api.onrender.com/'
@@ -56,15 +65,17 @@ def main():
     pathMod = str(Path(__file__).parent)+'/../Api/Data/Model/'
     ClientsDatabase = pd.read_csv(pathDb+'ClientDatabase.csv')
     ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
+    if 'etat' not in st.session_state:
+        st.session_state.etat = 0
     #Menu deroulant
     user_id = st.sidebar.selectbox('Recherche client',ClientsList)
-    predict_btn = st.sidebar.button('Calcul du risque')
+    predict_btn = st.sidebar.button('Calcul du risque', on_click=set_state, args=[user_id])
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
     
     st.title('Calcul Risque d\'un Crédit')
 
-    if predict_btn:
+    if st.session_state.stage != 0:
         with st.spinner("Merci de patienter l\'api est en cours de démarrage... "):
             pred = request_prediction(MODEL_URI, str(user_id))
             if type(pred) == dict:
@@ -81,8 +92,8 @@ def main():
                     if voirFeatureImpoLocale:
                         model = loadModel()
                         shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
-                        shap.plots.waterfall(shap_values_single[0], max_display=10)
-                        shap.summary_plot(shap_values, max_display=10)
+                        st_shap(shap.plots.waterfall(shap_values_single[0], max_display=10))
+                        st_shap(shap.summary_plot(shap_values, max_display=10))
 
 if __name__ == '__main__':
     main()
