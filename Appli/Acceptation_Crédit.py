@@ -113,7 +113,7 @@ def main():
                                          {'range': [0, Seuil], 'color': "#008BFB"},
                                          {'range': [Seuil, 1], 'color': "#FF0051"}],
                                      'threshold' : {'line': {'color': "white", 'width': 2}, 'thickness': 0.9, 'value': Seuil}}))
-                    st.plotly_chart(jauge, use_container_width=False, *, theme="streamlit", on_select="ignore")
+                    st.plotly_chart(jauge, use_container_width=False, theme="streamlit", on_select="ignore")
 
                     model = loadModel(pathMod+'model.pkl')
                     shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
