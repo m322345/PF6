@@ -75,6 +75,8 @@ def main():
     ClientsDatabase = pd.read_csv(pathDb+'ClientDatabase.csv')
     ClientsList = ClientsDatabase['SK_ID_CURR'].tolist()
     Seuil = get_file_number(FichierSeuil)
+    CouleurRefus = "#FF0051"
+    CouleurAccord = "#008BFB"
     #creation de la session
     if 'etat' not in st.session_state:
         st.session_state.etat = 0
@@ -84,41 +86,38 @@ def main():
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
     #Page
-    st.title('Calcul Risque d\'un Crédit')
+    st.title('Risque de faillite d\'un client de prêt')
 
     if st.session_state.etat != 0:
         with st.spinner("Merci de patienter, nous récuperons les données du client ... "):
             pred = request_prediction(MODEL_URI, str(user_id))
             if type(pred) == dict:
+
                 if "error" in pred:
                     st.write(f"")
                     st.write(f"Erreur {pred['error']}")
                 else:
-                    st.write(f"")
+                    jauge = go.Figure(go.Indicator(
+                            domain = {'x': [0, 1], 'y': [0, 1]},
+                            value = round(pred['risk'],2),
+                            mode = "gauge+number+delta",
+                            delta = {'reference': Seuil, 'decreasing': {'color': CouleurAccord}, 'increasing': {'color': CouleurRefus}},
+                            gauge = {'axis': {'range': [None, 1]},
+                                     'bar': {'color': "#464646", 'thickness': 0.3},
+                                     'steps' : [
+                                         {'range': [0, Seuil], 'color': CouleurAccord},
+                                         {'range': [Seuil, 1], 'color': CouleurRefus}],
+                                     'threshold' : {'line': {'color': "white", 'width': 2}, 'thickness': 0.9, 'value': Seuil}}))
+                    st.plotly_chart(jauge, use_container_width=False, theme="streamlit", on_select="ignore")
+                    st.divider()
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
                     st.write(f"Le seuil de refus est fixé à {Seuil:.2f}")
                     st.write(f"Le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
 
                     st.divider()
-                    jauge = go.Figure(go.Indicator(
-                            domain = {'x': [0, 1], 'y': [0, 1]},
-                            value = round(pred['risk'],2),
-                            mode = "gauge+number+delta",
-                            title = {'text': "Risque de faillite", 'font': {'size': 26}},
-                            delta = {'reference': Seuil, 'decreasing': {'color': "#008BFB"}, 'increasing': {'color': "#FF0051"}},
-                            gauge = {'axis': {'range': [None, 1]},
-                                     'bar': {'color': "#464646", 'thickness': 0.3},
-                                     'steps' : [
-                                         {'range': [0, Seuil], 'color': "#008BFB"},
-                                         {'range': [Seuil, 1], 'color': "#FF0051"}],
-                                     'threshold' : {'line': {'color': "white", 'width': 2}, 'thickness': 0.9, 'value': Seuil}}))
-                    st.plotly_chart(jauge, use_container_width=False, theme="streamlit", on_select="ignore")
-
                     model = loadModel(pathMod+'model.pkl')
                     shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
-
-                    st.divider()
                     st.write(f"Explication Locale")
                     fig, ax = plt.subplots(figsize=(5, 5))
                     shap.plots.waterfall(shap_values_single[0], max_display=10)
