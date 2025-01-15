@@ -1,7 +1,8 @@
 # Projet OC7 - Implémentez un modèle de scoring
 
 Vous êtes Data Scientist au sein d'une société financière, nommée "Prêt à dépenser", qui propose des crédits à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt.
-See https://render.com/docs/deploy-fastapi or follow the steps below:
+
+L’entreprise souhaite mettre en œuvre un outil de “scoring crédit” pour calculer la probabilité qu’un client rembourse son crédit, puis classifie la demande en crédit accordé ou refusé. Elle souhaite donc développer un algorithme de classification en s’appuyant sur des sources de données variées (données comportementales, données provenant d'autres institutions financières, etc.)
 
 ## La mission :
 
@@ -23,8 +24,10 @@ Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisation
 
 ## Les outils :
 
-[![Serveur personnel Jupyter](http://10.0.100.172:8888/)
-[![Serveur personnel MLFLOW](http://10.0.50.72:5000/)
-[![Dashboard Render](https://dashboard.render.com/)
-[![API hébergée sur Render](https://ocp7-api.onrender.com/)
-[![Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
+[Dashboard Render](https://dashboard.render.com/)
+[API hébergée sur Render](https://ocp7-api.onrender.com/)
+[Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
+
+## Les données :
+
+Les données sont issues du site Kagle [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)
