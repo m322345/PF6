@@ -86,7 +86,8 @@ def main():
     st.sidebar.divider()
     st.sidebar.page_link("https://www.ewd.fr/Formation/Data/P7/Drift_du_Modèle.html", label='Visualisation Data Drift')
     #Page
-    st.title('Risque de faillite d\'un client')
+    style_heading = 'text-align: center'
+    st.markdown(f"<h1 style='{style_heading}'>Risque de faillite d\'un client</h1>", unsafe_allow_html=True)
 
     if st.session_state.etat != 0:
         with st.spinner("Merci de patienter, nous récuperons les données du client ... "):
