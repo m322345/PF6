@@ -1,4 +1,5 @@
 import streamlit as st
+import plotly.graph_objects as go
 import streamlit.components.v1 as components
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -95,9 +96,25 @@ def main():
                 else:
                     st.write(f"")
                     st.write(f"Prédiction de risque de faillite pour le client {pred['client_id']}")
-                    st.write(f"Le seuil d'acceptation est fixé à {Seuil:.2f}")
+                    st.write(f"Le seuil de refus est fixé à {Seuil:.2f}")
                     st.write(f"Le risque d'impayés est de {pred['risk']:.2f}")
                     st.write(f"La demande de crédit est {pred['status']}")
+
+                    st.divider()
+                    jauge = go.Figure(go.Indicator(
+                            domain = {'x': [0, 1], 'y': [0, 1]},
+                            value = round(pred['risk'],2),
+                            mode = "gauge+number+delta",
+                            title = {'text': "Risque de faillite", 'font': {'size': 26}},
+                            delta = {'reference': Seuil, 'decreasing': {'color': "#008BFB"}, 'increasing': {'color': "#FF0051"}},
+                            gauge = {'axis': {'range': [None, 1]},
+                                     'bar': {'color': "#464646", 'thickness': 0.3},
+                                     'steps' : [
+                                         {'range': [0, Seuil], 'color': "#008BFB"},
+                                         {'range': [Seuil, 1], 'color': "#FF0051"}],
+                                     'threshold' : {'line': {'color': "white", 'width': 2}, 'thickness': 0.9, 'value': Seuil}}))
+                    st.plotly_chart(jauge, use_container_width=False, *, theme="streamlit", on_select="ignore")
+
                     model = loadModel(pathMod+'model.pkl')
                     shap_values_single, shap_values = visualize_importance(model, user_id, ClientsDatabase)
 
