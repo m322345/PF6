@@ -32,6 +32,8 @@ Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisation
 
 [API hébergée sur Render](https://ocp7-api.onrender.com/)
 
+[Test de l'API hébergée sur Render](https://ocp7-api.onrender.com/docs/)
+
 [Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
 
 ## Les données :
