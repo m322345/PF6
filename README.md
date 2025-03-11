@@ -95,12 +95,12 @@ tests				| Les tests unitaires réalisés avec Pytest
 
 Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisations sauvegardées vers Mlflow et la modélisation finale.
 
-## Les outils :
+## Les liens vers l'application :
 
+- [Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
 - [Dashboard Render](https://dashboard.render.com/)
 - [API hébergée sur Render](https://ocp7-api.onrender.com/)
 - [Test de l'API hébergée sur Render](https://ocp7-api.onrender.com/docs/)
-- [Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
 
 ---
 - 👥 **Compétences requises** : Machine Learning, Python, MLOps, API, CI/CD, MLOps, Python, API, CI/CD, Streamlit, Evidently.
