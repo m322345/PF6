@@ -1,7 +1,7 @@
 ![Entete](images/projet.png)
 
 # 📌 Implémentation d’un Modèle de Scoring Crédit
-# 📌 Intégration et Optimisation du Système MLOps
+ 📌 Intégration et Optimisation du Système MLOps
 
 ## 📖 Contexte
 L’entreprise **Prêt à Dépenser**, spécialisée dans le crédit à la consommation, souhaite développer un **modèle de scoring** afin d’évaluer la probabilité qu’un client rembourse son prêt. 
