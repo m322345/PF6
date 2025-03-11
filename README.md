@@ -24,10 +24,6 @@ Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisation
 
 ## Les outils :
 
-[Serveur Jupyter personnel](http://10.0.100.172:8888/)
-
-[Serveur MlFlow personnel](http://10.0.50.72:5000/)
-
 [Dashboard Render](https://dashboard.render.com/)
 
 [API hébergée sur Render](https://ocp7-api.onrender.com/)
