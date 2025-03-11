@@ -1,15 +1,89 @@
-# Projet OC7 - Implémentez un modèle de scoring
+![Entete](images/projet.png)
 
-Data Scientist au sein d'une société financière, nommée "Prêt à dépenser", qui propose des crédits à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt.
+# 📌 Implémentation d’un Modèle de Scoring Crédit
+# 📌 Intégration et Optimisation du Système MLOps
 
-L’entreprise souhaite mettre en œuvre un outil de “scoring crédit” pour calculer la probabilité qu’un client rembourse son crédit, puis classifie la demande en crédit accordé ou refusé. Elle souhaite donc développer un algorithme de classification en s’appuyant sur des sources de données variées (données comportementales, données provenant d'autres institutions financières, etc.)
+## 📖 Contexte
+L’entreprise **Prêt à Dépenser**, spécialisée dans le crédit à la consommation, souhaite développer un **modèle de scoring** afin d’évaluer la probabilité qu’un client rembourse son prêt. 
 
-## La mission :
+L’objectif est de concevoir un **algorithme de classification** capable de **prédire le risque de défaut de paiement** et d’industrialiser son déploiement via une approche **MLOps**.
 
-1. Construire un modèle de scoring qui donnera une prédiction sur la probabilité de faillite d'un client de façon automatique.
-2. Analyser les features qui contribuent le plus au modèle, d’une manière générale (feature importance globale) et au niveau d’un client (feature importance locale), afin, dans un soucis de transparence, de permettre à un chargé d’études de mieux comprendre le score attribué par le modèle.
-3. Mettre en production le modèle de scoring de prédiction à l’aide d’une API et réaliser une interface de test de cette API.
-4. Mettre en œuvre une approche globale MLOps de bout en bout, du tracking des expérimentations à l’analyse en production du data drift.
+l’**industrialisation complète du cycle de vie du modèle** nécessite d’intégrer une solution de **suivi des performances en production**.
+
+L’objectif est d’utiliser la librairie **Evidently** pour **détecter le Data Drift**, garantissant ainsi que le modèle reste performant face aux nouvelles données.
+
+
+## 🎯 Objectifs du Projet
+- ✅ Construire un **modèle de scoring crédit** basé sur des données clients.
+- ✅ Analyser la **feature importance** globale et locale.
+- ✅ Mettre en place une **API** pour exposer le modèle en production.
+- ✅ Implémenter une **approche MLOps** pour automatiser l’intégration et le suivi du modèle.
+- ✅ Déployer l’**API du modèle de scoring** dans le cloud.
+- ✅ Mettre en place une **interface utilisateur** permettant de tester l’API.
+- ✅ Intégrer **Evidently** pour surveiller le **Data Drift** entre les données d’entraînement et celles en production.
+- ✅ Préparer une **présentation structurée** expliquant la démarche et les choix techniques.
+
+## 🛠️ Étapes du Projet
+
+### 1️⃣ **Préparation de l’Environnement MLOps**
+- Configuration de **MLFlow** pour le suivi des expérimentations.
+- Mise en place d’un **model registry** pour la gestion des modèles.
+- Gestion du code avec **Git & GitHub Actions** pour CI/CD.
+
+### 2️⃣ **Préparation et Feature Engineering des Données**
+- Exploration des **données clients et comportementales**.
+- Nettoyage et préparation des variables pour la modélisation.
+- Gestion du **déséquilibre des classes** (bons vs mauvais payeurs).
+
+### 3️⃣ **Optimisation et Entraînement des Modèles**
+- Définition d’un **score métier** pour pénaliser différemment les erreurs de classification.
+- Sélection et entraînement des modèles via **GridSearchCV**.
+- Comparaison des performances avec des métriques comme **AUC et accuracy**.
+
+### 4️⃣ **Analyse et Explicabilité du Modèle**
+- Étude de la **feature importance** avec SHAP/LIME.
+- Visualisation des contributions des variables aux prédictions.
+
+### 5️⃣ **Déploiement et Industrialisation**
+- Exposition du modèle via une **API REST** (Flask/FastAPI).
+- Déploiement sur une **solution cloud gratuite**.
+- Création d’une **interface Streamlit** pour tester l’API.
+
+### 6️⃣ **Déploiement de l’API dans le Cloud**
+- Versionner le code avec **Git**.
+- Automatiser le déploiement avec **GitHub Actions**.
+- Héberger l’API sur une **solution Cloud gratuite** (Heroku, Render, AWS, etc.).
+
+### 7️⃣ **Création d’une Interface de Test pour le Scoring**
+- Développer une **interface utilisateur avec Streamlit**.
+- Connecter l’interface à l’**API de scoring**.
+- Permettre la soumission de données et l’affichage des résultats du modèle.
+
+### 8️⃣ **Surveillance du Data Drift avec Evidently**
+- Comparer les distributions des features entre :
+  - `application_train` (données d’entraînement)
+  - `application_test` (nouvelles données clients en production)
+- Générer un **rapport HTML Evidently** pour visualiser les dérives.
+- Détecter les features les plus sujettes au **Data Drift**.
+
+### 9️⃣ **Présentation du Projet**
+- Structurer une **présentation claire** des choix méthodologiques.
+- Justifier les décisions sur le **modèle, son déploiement et le suivi en production**.
+
+## 📦 Livrables Attendus
+- ✅ Un **notebook** contenant l’analyse exploratoire et l’implémentation du modèle.
+- ✅ Un **modèle de scoring optimisé** et stocké via MLFlow.
+- ✅ Une **analyse des variables explicatives** et de leur impact sur la décision.
+- ✅ Un **pipeline MLOps** assurant le suivi et la mise à jour du modèle.
+- ✅ Une **API déployée** et accessible en ligne pour prédire la probabilité de défaut.
+- ✅ Une **interface utilisateur fonctionnelle** permettant de tester le scoring.
+- ✅ Un **rapport Evidently** sur le Data Drift entre les données d’entraînement et de production.
+- ✅ Une **présentation détaillée** expliquant le cycle de vie du modèle et le suivi MLOps.
+
+## 🚀 Objectif Final
+Fournir un **outil automatisé et interprétable** permettant d’évaluer le risque de crédit, tout en garantissant un **suivi rigoureux des performances** du modèle grâce aux pratiques **MLOps**.
+
+Assurer un **déploiement robuste et un suivi efficace** du modèle de scoring, permettant à l’entreprise d’**anticiper les dérives des données et d’ajuster le modèle en conséquence**.
 
 ## Descriptif de la structure :
 
@@ -24,14 +98,12 @@ Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisation
 
 ## Les outils :
 
-[Dashboard Render](https://dashboard.render.com/)
+- [Dashboard Render](https://dashboard.render.com/)
+- [API hébergée sur Render](https://ocp7-api.onrender.com/)
+- [Test de l'API hébergée sur Render](https://ocp7-api.onrender.com/docs/)
+- [Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
 
-[API hébergée sur Render](https://ocp7-api.onrender.com/)
-
-[Test de l'API hébergée sur Render](https://ocp7-api.onrender.com/docs/)
-
-[Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
-
-## Les données :
-
-Les données sont issues du site Kagle [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)
+---
+- 👥 **Compétences requises** : Machine Learning, Python, MLOps, API, CI/CD, MLOps, Python, API, CI/CD, Streamlit, Evidently.
+- 🌍 **Technologies** : GitHub Actions, Cloud Deployment, Monitoring MLOps.
+- 🌍 **Source des données** : Issues du site Kagle [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)
