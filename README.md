@@ -2,6 +2,12 @@
 
 # 📌 Implémentation d’un Modèle de Scoring Crédit et Optimisation du Système MLOps
 
+## Les liens vers l'application :
+
+- [Démonstration de l'Application](https://data.ewd.fr/dashboard-p7/)
+- [Démonstration de l'API](https://data.ewd.fr/api-p7)
+- [Test de l'API](https://data.ewd.fr/api-p7/docs/)
+
 ## 📖 Contexte
 L’entreprise **Prêt à Dépenser**, spécialisée dans le crédit à la consommation, souhaite développer un **modèle de scoring** afin d’évaluer la probabilité qu’un client rembourse son prêt. 
 
@@ -94,13 +100,6 @@ Appli				| L'application frontend déployée automatiquement vers Streamlit
 tests				| Les tests unitaires réalisés avec Pytest
 
 Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisations sauvegardées vers Mlflow et la modélisation finale.
-
-## Les liens vers l'application :
-
-- [Application hébergée sur Streamlit](https://ocp7-froidure.streamlit.app/)
-- [Dashboard Render](https://dashboard.render.com/)
-- [API hébergée sur Render](https://ocp7-api.onrender.com/)
-- [Test de l'API hébergée sur Render](https://ocp7-api.onrender.com/docs/)
 
 ---
 - 👥 **Compétences requises** : Machine Learning, Python, MLOps, API, CI/CD, MLOps, Python, API, CI/CD, Streamlit, Evidently.
