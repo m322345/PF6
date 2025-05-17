@@ -102,6 +102,6 @@ tests				| Les tests unitaires réalisés avec Pytest
 Le fichier Modelisation.ipynb contient l'exploration, les tests de modélisations sauvegardées vers Mlflow et la modélisation finale.
 
 ---
-- 👥 **Compétences requises** : Machine Learning, Python, MLOps, API, CI/CD, MLOps, Python, API, CI/CD, Streamlit, Evidently.
+- 👥 **Compétences requises** : Machine Learning, Python, MLOps, API, CI/CD, MLOps, Python, API, Streamlit, Evidently.
 - 🌍 **Technologies** : GitHub Actions, Cloud Deployment, Monitoring MLOps.
 - 🌍 **Source des données** : Issues du site Kagle [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)
